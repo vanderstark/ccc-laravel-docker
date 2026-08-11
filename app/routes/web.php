@@ -9,6 +9,8 @@ use App\Http\Controllers\ExportController;
 use App\Http\Controllers\OrganizationController;
 use App\Http\Controllers\LeadershipController;
 use App\Http\Controllers\AarController;
+use App\Http\Controllers\KomunikasiKrisisController;
+use App\Http\Controllers\KurikulumController;
 use App\Http\Controllers\Api\TacticalApiController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
@@ -82,9 +84,24 @@ Route::middleware('auth')->group(function () {
     Route::delete('/aar/{session}', [AarController::class, 'destroy'])->name('aar.destroy');
     Route::get('/aar/laporan', [AarController::class, 'report'])->name('aar.report');
     Route::get('/aar/laporan/simulasi/{simulation}', [AarController::class, 'report'])->name('aar.report.simulation');
+
+    // === KOMUNIKASI KRISIS + MEDIA SOSIAL + ANALITIK (PDF poin 3b) ===
+    Route::get('/krisis', [KomunikasiKrisisController::class, 'index'])->name('krisis.index');
+    Route::post('/krisis/medsos/store', [KomunikasiKrisisController::class, 'storeMedsos'])->name('krisis.medsos.store');
+    Route::post('/krisis/krisis/store', [KomunikasiKrisisController::class, 'storeKrisis'])->name('krisis.store');
+    Route::post('/krisis/medsos/{media}/status', [KomunikasiKrisisController::class, 'updateStatus'])->name('krisis.medsos.update');
+    Route::post('/krisis/krisis/{krisis}/status', [KomunikasiKrisisController::class, 'updateKrisis'])->name('krisis.krisis.update');
+    Route::delete('/krisis/medsos/{media}', [KomunikasiKrisisController::class, 'destroyMedsos'])->name('krisis.medsos.destroy');
+    Route::delete('/krisis/krisis/{krisis}', [KomunikasiKrisisController::class, 'destroyKrisis'])->name('krisis.krisis.destroy');
+
+    // === KURIKULUM SESPIM / SESP IMMEN / SESPIMTI (PDF poin 2g & 3e) ===
+    Route::get('/kurikulum', [KurikulumController::class, 'index'])->name('kurikulum.index');
+    Route::post('/kurikulum/mapping', [KurikulumController::class, 'storeMapping'])->name('kurikulum.mapping.store');
+    Route::post('/kurikulum/progress/store', [KurikulumController::class, 'storeProgress'])->name('kurikulum.progress.store');
+    Route::put('/kurikulum/progress/{progress}', [KurikulumController::class, 'updateProgress'])->name('kurikulum.progress.update');
 });
 
-// === API (tanpa CSRF, untuk live sync) ===
+// === API (untuk live sync) ===
 Route::middleware('auth')->prefix('api/v1')->group(function () {
     Route::get('/sync', [TacticalApiController::class, 'sync'])->name('api.sync');
     Route::get('/replay', [TacticalApiController::class, 'replay'])->name('api.replay');

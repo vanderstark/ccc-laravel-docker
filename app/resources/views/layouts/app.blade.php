@@ -65,6 +65,8 @@
                         <li><a class="dropdown-item" href="{{ route('aar.report') }}"><i class="bi bi-download me-2"></i>Laporan AAR</a></li>
                     </ul>
                 </li>
+                <li class="nav-item"><a class="nav-link" href="{{ route('krisis.index') }}"><i class="bi bi-graph-up-arrow me-1"></i>Krisis &amp; Medsos</a></li>
+                <li class="nav-item"><a class="nav-link" href="{{ route('kurikulum.index') }}"><i class="bi bi-mortarboard me-1"></i>Kurikulum</a></li>
             </ul>
             <ul class="navbar-nav">
                 @auth
