@@ -44,6 +44,17 @@
                 <li class="nav-item"><a class="nav-link" href="{{ route('simulations.create') }}"><i class="bi bi-plus-circle me-1"></i>Simulasi Baru</a></li>
                 <li class="nav-item"><a class="nav-link" href="{{ route('simulations.history') }}"><i class="bi bi-clock-history me-1"></i>Riwayat</a></li>
                 <li class="nav-item"><a class="nav-link" href="{{ route('maps') }}"><i class="bi bi-map me-1"></i>Peta</a></li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#"><i class="bi bi-grid-1x2 me-1"></i>Taktis</a>
+                    <ul class="dropdown-menu dropdown-menu-dark">
+                        <li><a class="dropdown-item" href="{{ route('tactical.markers') }}"><i class="bi bi-geo-alt me-2"></i>Marker (Unit/Incident/Asset)</a></li>
+                        <li><a class="dropdown-item" href="{{ route('tactical.zones') }}"><i class="bi bi-map me-2"></i>Zona / Route / Objective</a></li>
+                        <li><a class="dropdown-item" href="{{ route('tactical.organizations') }}"><i class="bi bi-building me-2"></i>Instansi (POLRI/HANKAM/PEMDA)</a></li>
+                        <li><a class="dropdown-item" href="{{ route('tactical.audit') }}"><i class="bi bi-journal-check me-2"></i>Audit Trail</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href="{{ route('export.csv') }}"><i class="bi bi-file-earmark-spreadsheet me-2"></i>Export CSV</a></li>
+                    </ul>
+                </li>
             </ul>
             <ul class="navbar-nav">
                 @auth

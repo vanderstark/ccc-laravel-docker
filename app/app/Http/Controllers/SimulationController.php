@@ -34,6 +34,16 @@ class SimulationController extends Controller
     {
         $input = $request->validated();
         $sim = $simSvc->run($input);
+
+        \App\Models\AuditLog::create([
+            'user_id' => auth()->id(),
+            'action' => 'create',
+            'entity' => 'simulation',
+            'entity_id' => $sim->id,
+            'data' => ['disaster_type' => $sim->disaster_type, 'location' => $sim->location, 'alert' => $sim->alert_level],
+            'ip' => $request->ip(),
+        ]);
+
         return redirect()->route('simulations.show', $sim);
     }
 
@@ -44,6 +54,15 @@ class SimulationController extends Controller
 
     public function destroy(\App\Models\Simulation $simulation): RedirectResponse
     {
+        \App\Models\AuditLog::create([
+            'user_id' => auth()->id(),
+            'action' => 'delete',
+            'entity' => 'simulation',
+            'entity_id' => $simulation->id,
+            'data' => ['location' => $simulation->location],
+            'ip' => request()->ip(),
+        ]);
+
         $simulation->delete();
         return back()->with('success', 'Simulasi berhasil dihapus.');
     }
