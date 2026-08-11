@@ -30,6 +30,12 @@ docker-compose up -d --build
 - Akses via tombol "Daftar" di halaman login
 - Role dapat dipilih (admin, operator, publik)
 
+**Database Manager — Adminer:**
+- Akses: `http://localhost:8081`
+- Server: `db`
+- User: `ccc_user` / Password: `secret` (atau sesuai `DB_PASSWORD`)
+- Root: `root` / Password: `rootpass`
+
 ## 🗄️ Deploy Tanpa Docker
 
 ```bash
