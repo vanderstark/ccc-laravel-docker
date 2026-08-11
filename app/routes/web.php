@@ -7,6 +7,8 @@ use App\Http\Controllers\ZoneController;
 use App\Http\Controllers\AuditController;
 use App\Http\Controllers\ExportController;
 use App\Http\Controllers\OrganizationController;
+use App\Http\Controllers\LeadershipController;
+use App\Http\Controllers\AarController;
 use App\Http\Controllers\Api\TacticalApiController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
@@ -34,7 +36,7 @@ Route::post('/logout', function (Request $request) {
 
 // === Aplikasi Utama (wajib login) ===
 Route::middleware('auth')->group(function () {
-    // Dashboard
+    // Dashboard + Peta
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     Route::get('/peta', [DashboardController::class, 'maps'])->name('maps');
 
@@ -66,6 +68,20 @@ Route::middleware('auth')->group(function () {
     // === ORGANISASI (POLRI, HANKAM, PEMDA) ===
     Route::get('/taktis/organisasi', [OrganizationController::class, 'index'])->name('tactical.organizations');
     Route::post('/taktis/organisasi', [OrganizationController::class, 'store'])->name('tactical.organizations.store');
+
+    // === LEADERSHIP (Dashboard, Penilaian Kepemimpinan) ===
+    Route::get('/leadership', [LeadershipController::class, 'dashboard'])->name('leadership.dashboard');
+    Route::get('/leadership/buat', [LeadershipController::class, 'create'])->name('leadership.create');
+    Route::post('/leadership/simpan', [LeadershipController::class, 'store'])->name('leadership.store');
+    Route::get('/leadership/{assessment}', [LeadershipController::class, 'show'])->name('leadership.show');
+    Route::delete('/leadership/{assessment}', [LeadershipController::class, 'destroy'])->name('leadership.destroy');
+
+    // === AAR (After Action Review) ===
+    Route::get('/aar', [AarController::class, 'index'])->name('aar.index');
+    Route::post('/aar/simpan', [AarController::class, 'store'])->name('aar.store');
+    Route::delete('/aar/{session}', [AarController::class, 'destroy'])->name('aar.destroy');
+    Route::get('/aar/laporan', [AarController::class, 'report'])->name('aar.report');
+    Route::get('/aar/laporan/simulasi/{simulation}', [AarController::class, 'report'])->name('aar.report.simulation');
 });
 
 // === API (tanpa CSRF, untuk live sync) ===
@@ -73,6 +89,7 @@ Route::middleware('auth')->prefix('api/v1')->group(function () {
     Route::get('/sync', [TacticalApiController::class, 'sync'])->name('api.sync');
     Route::get('/replay', [TacticalApiController::class, 'replay'])->name('api.replay');
     Route::get('/timeline', [TacticalApiController::class, 'timeline'])->name('api.timeline');
+    Route::get('/assessments', [TacticalApiController::class, 'assessments'])->name('api.assessments');
 });
 
 // Fallback: redirect ke dashboard

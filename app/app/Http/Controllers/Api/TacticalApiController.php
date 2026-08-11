@@ -71,4 +71,23 @@ class TacticalApiController extends Controller
 
         return response()->json(['timeline' => $logs]);
     }
+
+    /** Leadership assessments untuk dashboard. */
+    public function assessments()
+    {
+        return response()->json([
+            'assessments' => \App\Models\LeadershipAssessment::with('user', 'simulation')
+                ->latest()
+                ->limit(50)
+                ->get()
+                ->map(fn ($a) => [
+                    'id' => $a->id,
+                    'user' => $a->user?->name,
+                    'scenario' => $a->scenario_name,
+                    'total' => (float)$a->skor_total,
+                    'grade' => $a->grade,
+                    'created_at' => $a->created_at?->toIso8601String(),
+                ]),
+        ]);
+    }
 }

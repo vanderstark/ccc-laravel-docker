@@ -55,6 +55,16 @@
                         <li><a class="dropdown-item" href="{{ route('export.csv') }}"><i class="bi bi-file-earmark-spreadsheet me-2"></i>Export CSV</a></li>
                     </ul>
                 </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#"><i class="bi bi-award me-1"></i>Kepemimpinan</a>
+                    <ul class="dropdown-menu dropdown-menu-dark">
+                        <li><a class="dropdown-item" href="{{ route('leadership.dashboard') }}"><i class="bi bi-speedometer me-2"></i>Dashboard Pimpinan</a></li>
+                        <li><a class="dropdown-item" href="{{ route('leadership.create') }}"><i class="bi bi-pencil-square me-2"></i>Penilaian Baru</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href="{{ route('aar.index') }}"><i class="bi bi-journal-check me-2"></i>AAR Workflow</a></li>
+                        <li><a class="dropdown-item" href="{{ route('aar.report') }}"><i class="bi bi-download me-2"></i>Laporan AAR</a></li>
+                    </ul>
+                </li>
             </ul>
             <ul class="navbar-nav">
                 @auth
