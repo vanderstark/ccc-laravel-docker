@@ -67,6 +67,28 @@
                 </li>
                 <li class="nav-item"><a class="nav-link" href="{{ route('krisis.index') }}"><i class="bi bi-graph-up-arrow me-1"></i>Krisis &amp; Medsos</a></li>
                 <li class="nav-item"><a class="nav-link" href="{{ route('kurikulum.index') }}"><i class="bi bi-mortarboard me-1"></i>Kurikulum</a></li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="{{ route('latihan.index') }}"><i class="bi bi-controller me-1"></i>Latihan</a>
+                    <ul class="dropdown-menu dropdown-menu-dark">
+                        <li><a class="dropdown-item" href="{{ route('latihan.index') }}"><i class="bi bi-list me-2"></i>Sesi Latihan</a></li>
+                        <li><a class="dropdown-item" href="{{ route('latihan.create') }}"><i class="bi bi-plus-lg me-2"></i>Buat Sesi Baru</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href="{{ route('krisis.index') }}#excon"><i class="bi bi-lightning-charge me-2"></i>EXCON Panel</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#"><i class="bi bi-diagram-2 me-1"></i>Operasi</a>
+                    <ul class="dropdown-menu dropdown-menu-dark">
+                        <li><a class="dropdown-item" href="{{ route('latihan.index') }}"><i class="bi bi-info-circle me-2"></i>Pilih Sesi Latihan Dulu</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#"><i class="bi bi-play-circle me-1"></i>Replay</a>
+                    <ul class="dropdown-menu dropdown-menu-dark">
+                        <li><a class="dropdown-item" href="{{ route('aar.index') }}"><i class="bi bi-camera-replay me-2"></i>Replay Sesi</a></li>
+                        <li><a class="dropdown-item" href="{{ route('aar.report') }}"><i class="bi bi-bar-chart-steps me-2"></i>AAR Enhanced</a></li>
+                    </ul>
+                </li>
             </ul>
             <ul class="navbar-nav">
                 @auth

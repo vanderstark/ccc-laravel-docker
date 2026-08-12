@@ -11,6 +11,10 @@ use App\Http\Controllers\LeadershipController;
 use App\Http\Controllers\AarController;
 use App\Http\Controllers\KomunikasiKrisisController;
 use App\Http\Controllers\KurikulumController;
+use App\Http\Controllers\LatihanController;
+use App\Http\Controllers\OperasiController;
+use App\Http\Controllers\VideoWallController;
+use App\Http\Controllers\ReplayController;
 use App\Http\Controllers\Api\TacticalApiController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
@@ -99,6 +103,43 @@ Route::middleware('auth')->group(function () {
     Route::post('/kurikulum/mapping', [KurikulumController::class, 'storeMapping'])->name('kurikulum.mapping.store');
     Route::post('/kurikulum/progress/store', [KurikulumController::class, 'storeProgress'])->name('kurikulum.progress.store');
     Route::put('/kurikulum/progress/{progress}', [KurikulumController::class, 'updateProgress'])->name('kurikulum.progress.update');
+
+    // === TFG: MENU LATIHAN (Session Management) ===
+    Route::get('/latihan', [LatihanController::class, 'index'])->name('latihan.index');
+    Route::get('/latihan/buat', [LatihanController::class, 'create'])->name('latihan.create');
+    Route::post('/latihan', [LatihanController::class, 'store'])->name('latihan.store');
+    Route::get('/latihan/{session}', [LatihanController::class, 'show'])->name('latihan.show');
+    Route::post('/latihan/{session}/transition', [LatihanController::class, 'transition'])->name('latihan.transition');
+    Route::get('/latihan/{session}/timer', [LatihanController::class, 'timer'])->name('latihan.timer');
+
+    // Inject (EXCON)
+    Route::get('/latihan/{session}/injects', [LatihanController::class, 'injects'])->name('latihan.injects');
+    Route::post('/latihan/{session}/injects', [LatihanController::class, 'storeInject'])->name('latihan.inject.store');
+    Route::post('/latihan/inject/{inject}/deliver', [LatihanController::class, 'deliverInject'])->name('latihan.inject.deliver');
+
+    // Fog of War (EXCON)
+    Route::get('/latihan/{session}/fog', [LatihanController::class, 'fog'])->name('latihan.fog');
+    Route::post('/latihan/{session}/fog/toggle', [LatihanController::class, 'toggleFog'])->name('latihan.fog.toggle');
+
+    // Decision Log
+    Route::get('/latihan/{session}/keputusan', [LatihanController::class, 'decisions'])->name('latihan.decisions');
+    Route::post('/latihan/{session}/keputusan', [LatihanController::class, 'storeDecision'])->name('latihan.decision.store');
+
+    // === TFG: MENU OPERASI (Order Board & ORBAT) ===
+    Route::get('/operasi/{session}', [OperasiController::class, 'index'])->name('operasi.index');
+    Route::post('/operasi/{session}', [OperasiController::class, 'store'])->name('operasi.store');
+    Route::put('/operasi/{session}/order/{order}', [OperasiController::class, 'updateStatus'])->name('operasi.update');
+    Route::get('/operasi/{session}/orbat', [OperasiController::class, 'orbat'])->name('operasi.orbat');
+    Route::put('/operasi/{session}/orbat/{unit}', [OperasiController::class, 'updateOrbat'])->name('operasi.orbat.update');
+
+    // === TFG: VIDEO WALL (COP Kiosk) ===
+    Route::get('/wall/{session}', [VideoWallController::class, 'show'])->name('videowall.show');
+    Route::get('/wall/{session}/data', [VideoWallController::class, 'data'])->name('videowall.data');
+
+    // === TFG: REPLAY & HEATMAP (AAR Enhanced) ===
+    Route::get('/replay/{session}', [ReplayController::class, 'show'])->name('replay.show');
+    Route::get('/replay/{session}/heatmap', [ReplayController::class, 'heatmap'])->name('replay.heatmap');
+    Route::get('/replay/compare/{sessionA}/{sessionB}', [ReplayController::class, 'compare'])->name('replay.compare');
 });
 
 // === API (untuk live sync) ===
